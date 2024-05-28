@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  EC2_PUBLIC_IP: 3.101.117.74 #
+  EC2_PUBLIC_IP: 3.101.117.74
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 jobs:
   Deploy:
@@ -21,12 +21,10 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > mykey.pem
           chmod 400 mykey.pem
           
-          # Copy the files from the current working directory into the EC2 instance, under `~/app`, excluding mykey.pem.
-          sync -e "ssh -o StrictHostKeyChecking=no -i mykey.pem" -av --exclude=mykey.pem ./ ubuntu@$EC2_PUBLIC_IP:~/app/
+          # Copy the files from the curr wrok dir into the EC2 instance, under `~/app`.
+          scp -o StrictHostKeyChecking=no -i mykey.pem -r * ubuntu@$EC2_PUBLIC_IP:~/app
           
-          # Connect to your EC2 instance and execute the `deploy.sh` script.
-          ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@$EC2_PUBLIC_IP "bash ~/app/deploy.sh"
-          
+          # Connect to your EC2 instance and execute the `deploy.sh` script (this script is part of the repo files). 
           # You need to implement the `deploy.sh` script yourself.
           #
           #  Upon completion, the NetflixMovieCatalog app should be running with its newer version. 
