@@ -5,8 +5,8 @@ After=network.target
 [Service]
 User=ubuntu
 Group=ubuntu
-WorkingDirectory=<absolute-path-to-app-work-dir>
-ExecStart=<absolute-path-to-app-work-dir>/.venv/bin/uwsgi --ini uwsgi.ini
+WorkingDirectory=/howe/ubuntu/NetflixMovieCatalog
+ExecStart=/home/ubuntu/NetflixMovieCatalog/venv/bin/uwsgi --ini uwsgi.ini
 Restart=always
 
 [Install]
